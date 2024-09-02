@@ -1,4 +1,6 @@
 spring:
+  main:
+    debug: true
   application:
     name: ms-cliente-service
   profiles:
