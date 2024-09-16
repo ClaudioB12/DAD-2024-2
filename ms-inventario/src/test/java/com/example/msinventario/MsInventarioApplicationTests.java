@@ -1,13 +1,13 @@
-package com.example.mspedido;
+package com.example.msinventario;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MsPedidoApplicationTests {
+class MsInventarioApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
