@@ -2,6 +2,7 @@ package com.example.mspedido.service.impl;
 
 import com.example.mspedido.entity.Order;
 import com.example.mspedido.entity.OrderDetail;
+import com.example.mspedido.feign.ClientFeign;
 import com.example.mspedido.feign.ProductFeign;
 import com.example.mspedido.repository.OrderRepository;
 import com.example.mspedido.service.OrderService;
@@ -18,6 +19,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private ClientFeign clientFeign;
+    @Autowired
     private ProductFeign productFeign;
 
     @Override
@@ -30,14 +33,20 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
-    @Override
-        public Optional<Order> findById(Integer id) {
-            Optional<Order> order = orderRepository.findById(id);
-            for (OrderDetail orderDetail : order.get().getOrderDetails()) {
-                orderDetail.setProductDto(productFeign.getById(orderDetail.getProductId()).getBody());
-            }
-            return orderRepository.findById(id);
-        }
+    public Optional<Order> findById(Integer id) {
+        Optional<Order> order = orderRepository.findById(id);
+        order.get().setClientDto(clientFeign.getById(order.get().getClientId()).getBody());
+        /*for (OrderDetail orderDetail : order.get().getOrderDetails()) {
+            orderDetail.setProductDto(productFeign.getById(orderDetail.getProductId()).getBody());
+        }*/
+        /*order.get().getOrderDetails().stream().forEach(orderDetail -> {
+            orderDetail.setProductDto(productFeign.getById(orderDetail.getProductId()).getBody());
+        });*/
+        order.get().getOrderDetails().forEach(orderDetail -> {
+            orderDetail.setProductDto(productFeign.getById(orderDetail.getProductId()).getBody());
+        });
+        return order;
+    }
 
     @Override
     public void delete(Integer id) {
