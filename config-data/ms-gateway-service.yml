@@ -24,6 +24,14 @@ spring:
             - Path=/category/**
           filters:
             - AuthFilter
+
+        - id: ms-pedido-service
+          uri: lb://ms-pedido-service
+          predicates:
+            - Path=/orders/**
+          filters:
+            - AuthFilter
+
         - id: ms-auth-service
           uri: lb://ms-auth-service
           predicates:
