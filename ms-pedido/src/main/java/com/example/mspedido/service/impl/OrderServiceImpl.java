@@ -1,12 +1,10 @@
 package com.example.mspedido.service.impl;
 
 import com.example.mspedido.entity.Order;
-import com.example.mspedido.entity.OrderDetail;
 import com.example.mspedido.feign.ClientFeign;
 import com.example.mspedido.feign.ProductFeign;
 import com.example.mspedido.repository.OrderRepository;
 import com.example.mspedido.service.OrderService;
-import feign.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +18,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private ClientFeign clientFeign;
-    @Autowired
     private ProductFeign productFeign;
+    @Autowired
+    private ClientFeign clientFeign;
 
     @Override
     public List<Order> list() {
@@ -34,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
+    @Override
     public Optional<Order> findById(Integer id) {
         Optional<Order> order = orderRepository.findById(id);
         order.get().setClientDto(clientFeign.getById(order.get().getClientId()).getBody());

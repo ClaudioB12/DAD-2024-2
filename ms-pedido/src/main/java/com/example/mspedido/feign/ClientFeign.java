@@ -17,5 +17,4 @@ public interface ClientFeign {
     default ResponseEntity<ClientDto> clientListById(Integer id, Exception e) {
         return ResponseEntity.ok(new ClientDto());
     }
-
 }

@@ -1,6 +1,5 @@
 package com.example.mspedido.entity;
 
-
 import com.example.mspedido.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.Data;
